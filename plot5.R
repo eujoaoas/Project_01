@@ -1,0 +1,10 @@
+NEI <- readRDS("summarySCC_PM25.rds")
+SCC <- readRDS("Source_Classification_Code.rds")
+Baltimore_car <- subset(NEI, NEI$fips == "24510" & NEI$type == "ON-ROAD")
+Baltimore_car <- aggregate(Baltimore_car$Emissions, by = list(Baltimore_car$year), FUN = sum)
+head(Baltimore_car)
+colnames(Baltimore_car) <- c("Year", "Emissions")
+png("plot5.png")
+plot(Baltimore_car$Year, Baltimore_car$Emissions, type = "o", 
+     xlab = "Year", ylab = "Total Emissions", main = "Total Emissions of motor veichles related to PM2.5 in Baltimore City")
+dev.off()
